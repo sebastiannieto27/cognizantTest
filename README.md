@@ -7,7 +7,7 @@ Maven,
 Lombok.
 # Local Setup
 ##Pre-requisites
-Swicth JDK15
+##Swicth JDK15
 **Lombok installation**
 * STS & Eclipse (Windows) -> https://medium.com/@alisnagina/how-to-install-lombok-in-sts-eclipse-on-window-10-2e2169b41636
 
