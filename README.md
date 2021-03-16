@@ -5,8 +5,6 @@ Tecnologies:
 JDK 15,
 Maven,
 Lombok.
-
-Steps for configuration:
  ##Pre-requisites
 Swicth JDK15
 **Lombok installation**
