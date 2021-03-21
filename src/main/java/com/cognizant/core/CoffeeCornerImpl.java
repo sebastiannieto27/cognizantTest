@@ -5,6 +5,7 @@ import com.cognizant.model.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CoffeeCornerImpl implements CoffeeCorner {
 
@@ -20,13 +21,14 @@ public class CoffeeCornerImpl implements CoffeeCorner {
         long checkBeverage = countBeverage(products);
 
         long discount = checkBeverage > checkSnack ? checkSnack : 0L;
-        Receipt receipt = calculateDiscount(products, checkExtra, discount,checkBeverage);
+        Receipt receipt = calculateDiscount(products, checkExtra, discount, checkBeverage);
         return receipt;
     }
 
     private Receipt calculateDiscount(List<Product> products, boolean checkExtra, long discount, long checkBeverage) {
         Receipt receipt = new Receipt();
         TreeMap<Integer, Double> map = new TreeMap<>();
+        double subTotal = 0.0;
         products.stream()
                 .filter(product -> product.getOtherOffer() != null)
                 .forEach(product -> {
@@ -36,17 +38,17 @@ public class CoffeeCornerImpl implements CoffeeCorner {
         if (checkExtra) {
             setCheckCoffeeOffer(products, map);
             while (discount > 0L) {
-                int key = getRandomNumber(map.firstKey(), map.lastKey());
-                map.put(key, removeExtra(map, key));
+                subTotal = subTotal + checkExtraForFree(products);
                 discount--;
             }
         } else {
             setCheckCoffeeOffer(products, map);
         }
-
+        subTotal = subTotal + checkBeverageForFree(products, checkBeverage);
         receipt.setMap(map);
         receipt.setProducts(products.stream().map(Product::getName).collect(Collectors.toList()));
         receipt.setDate(LocalDate.now());
+        receipt.setSubTotal(subTotal);
         receipt.setTotal(receipt.getValues().stream().reduce(0.0, Double::sum));
         return receipt;
     }
@@ -60,27 +62,35 @@ public class CoffeeCornerImpl implements CoffeeCorner {
                 });
     }
 
-
-    private double removeExtra(TreeMap<Integer, Double> map, int key) {
-        return map.get(key) - ExtraOffer.ExtraMilk.getValue();
+    private double checkBeverageForFree(List<Product> products, long checkBeverage) {
+        return getRange().contains((int) checkBeverage) ? checkBeverage(getCheckCoffee(products), getCheckOther(products))
+                .stream().reduce((first, second) -> second).orElse(null).getPrice() : 0.0;
     }
 
-    private int getRandomNumber(int min, int max) {
-        return new Random().ints(min, max)
-                .findFirst()
-                .getAsInt();
+    private double checkExtraForFree(List<Product> products) {
+        return getCheckCoffee(products).stream().map(Product::getExtraOffer).findAny().get().getValue();
     }
 
     private long countBeverage(List<Product> products) {
-        long checkCoffee = products.stream()
-                .filter(product -> product.getCoffeeOffer() != null)
-                .filter(product -> getBeverage().contains(product.getCoffeeOffer().getPromotionType()))
-                .count();
-        long checkOther = products.stream()
+        return checkBeverage(getCheckCoffee(products), getCheckOther(products)).stream().count();
+    }
+
+    private List<Product> getCheckOther(List<Product> products) {
+        return products.stream()
                 .filter(product -> product.getOtherOffer() != null)
                 .filter(product -> getBeverage().contains(product.getOtherOffer().getPromotionType()))
-                .count();
-        return checkCoffee + checkOther;
+                .collect(Collectors.toList());
+    }
+
+    private List<Product> getCheckCoffee(List<Product> products) {
+        return products.stream()
+                .filter(product -> product.getCoffeeOffer() != null)
+                .filter(product -> getBeverage().contains(product.getCoffeeOffer().getPromotionType()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Product> checkBeverage(List<Product> coffeeOffer, List<Product> otherOffer) {
+        return Stream.concat(coffeeOffer.stream(), otherOffer.stream()).collect(Collectors.toList());
     }
 
     private List<String> getExtraOffer() {

@@ -16,8 +16,10 @@ public class Main {
                         CoffeeOffer.CoffeeSmall, ExtraOffer.FoamedMilk),
                 new Product(3, "Bacon", OtherOffer.BaconRoll.getValue(), OtherOffer.BaconRoll),
                 new Product(4, "Orange Juice", OtherOffer.OrangeJuice.getValue(), OtherOffer.OrangeJuice),
-                new Product(5, "coffee medium with milk", CoffeeOffer.CoffeeMedium.getValue()+ExtraOffer.SpecialCoffee.getValue(),
-                        CoffeeOffer.CoffeeMedium, ExtraOffer.SpecialCoffee));
+                new Product(5, "coffee medium with special", CoffeeOffer.CoffeeMedium.getValue()+ExtraOffer.SpecialCoffee.getValue(),
+                        CoffeeOffer.CoffeeMedium, ExtraOffer.SpecialCoffee),
+                new Product(6, "Orange Juice", OtherOffer.OrangeJuice.getValue(),
+                        OtherOffer.OrangeJuice));
         CoffeeCorner coffeeCorner = new CoffeeCornerImpl();
         Receipt receipt = coffeeCorner.applyDiscount(products);
         System.out.println(receipt.toString());

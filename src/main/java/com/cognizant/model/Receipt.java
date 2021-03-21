@@ -19,6 +19,7 @@ public class Receipt {
     private TreeMap<Integer,Double> map = new TreeMap<>();
     private List<String> products = new ArrayList<>();
     private LocalDate date;
+    private double subTotal;
     private  double total;
 
     @Override
@@ -33,7 +34,8 @@ public class Receipt {
             sb.append(String.format("%-30s %-20.2f\n", products.get(i),getValues().get(i)));
         }
         sb.append("\n");
-        sb.append("Total     : ").append(String.format("%23.2f", total)).append(" ").append("\n");
+        sb.append("SubTotal  : ").append(String.format("%23.2f", subTotal)).append(" ").append("\n");
+        sb.append("Total     : ").append(String.format("%23.2f", total - subTotal)).append(" ").append("\n");
         return sb.toString();
     }
 
