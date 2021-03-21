@@ -6,19 +6,19 @@ JDK 15,
 Maven,
 Lombok.
 # Result
-Welcome to Charlene's Coffee Corner: 
-Date      : 2021-03-21
-Item                           Price               
-----                           -----               
-coffee large with milk         3.80                
-coffee small with foamed milk  3.00                
-Bacon                          4.50                
-Orange Juice                   3.95                
-coffee medium with special     3.90                
-Orange Juice                   3.95                
+* Welcome to Charlene's Coffee Corner: 
+* Date      : 2021-03-21
+* Item                           Price               
+* ----                           -----               
+* coffee large with milk         3.80                
+* coffee small with foamed milk  3.00                
+* Bacon                          4.50                
+* Orange Juice                   3.95                
+* coffee medium with special     3.90                
+* Orange Juice                   3.95                
 
-SubTotal  :                    4.25 
-Total     :                   18.85 
+* SubTotal  :                    4.25 
+* Total     :                   18.85 
 
 # Local Setup
 ##Pre-requisites
