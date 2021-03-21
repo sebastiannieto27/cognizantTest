@@ -6,7 +6,7 @@ JDK 15,
 Maven,
 Lombok.
 # Result
-https://user-images.githubusercontent.com/26143907/111916199-c194d600-8a47-11eb-8df7-3eab7bd8b519.png
+<img width="301" alt="Screen Shot 2021-03-21 at 1 15 00 PM" src="https://user-images.githubusercontent.com/26143907/111916199-c194d600-8a47-11eb-8df7-3eab7bd8b519.png">
 
 # Local Setup
 ##Pre-requisites
