@@ -48,7 +48,7 @@ public class CoffeeCornerImpl implements CoffeeCorner {
         receipt.setMap(map);
         receipt.setProducts(products.stream().map(Product::getName).collect(Collectors.toList()));
         receipt.setDate(LocalDate.now());
-        receipt.setSubTotal(subTotal);
+        receipt.setDiscount(subTotal);
         receipt.setTotal(receipt.getValues().stream().reduce(0.0, Double::sum));
         return receipt;
     }
